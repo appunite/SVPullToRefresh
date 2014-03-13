@@ -220,10 +220,15 @@ static char UIScrollViewPullToRefreshView;
                                   };
     
     
-    CGRect textRect = [text boundingRectWithSize:size
+    CGRect textRect = CGRectZero;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return [text sizeWithFont:font constrainedToSize:size lineBreakMode:lineBreakMode];
+    } else {
+        textRect = [text boundingRectWithSize:size
                                          options:NSStringDrawingUsesLineFragmentOrigin
                                       attributes:attributes
                                          context:nil];
+    }
     
     //Contains both width & height ... Needed: The height
     return textRect.size;
